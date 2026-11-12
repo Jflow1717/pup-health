@@ -5,6 +5,9 @@ weights, IDs, and vet records. It works on phones and computers, shared
 between two logins. Hosting is free (GitHub Pages), and so is the database
 (Supabase free plan).
 
+**The app:** https://jflow1717.github.io/pup-health/ (it says "Almost
+ready" until the Supabase steps in SETUP.md are done).
+
 **No personal records are kept in this folder's GitHub copy.** Microchip
 numbers, starter data, and backups live only in `private/` on this
 computer and in the Supabase database, which only the two household logins
@@ -51,6 +54,8 @@ it on this computer only, so nobody else on the Wi-Fi can open
 3. Weight log and chart (done)
 4. IDs and contacts (done)
 5. Import screen (done)
-6. Vet summary page and export (done, waiting for your OK)
+6. Vet summary page and export (done)
 
-After that: going live (Supabase setup from SETUP.md, then GitHub Pages).
+Going live: on GitHub Pages (done, Nov 12, 2026). Next, the Supabase
+setup in SETUP.md, then the Project URL and publishable key go in
+`js/config.js`.
