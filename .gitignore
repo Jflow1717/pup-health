@@ -1,0 +1,13 @@
+# Personal records (ID numbers, starter data, backups) never go to GitHub.
+private/
+*.backup.json
+pup-health-backup-*.json
+pup-health-backup-*.csv
+pup-health-backup-*.zip
+
+# Mac clutter
+.DS_Store
+
+# Test tools (installed with npm, not part of the app)
+tests/node_modules/
+tests/roundtrip.json

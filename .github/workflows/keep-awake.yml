@@ -1,0 +1,58 @@
+# =====================================================================
+#  Keep the database awake
+# =====================================================================
+#  Supabase's free plan pauses a project after about 7 quiet days. Once
+#  a day, GitHub runs this job, which asks the database one harmless
+#  question (keep_awake, in supabase/schema.sql: it only answers
+#  "true"). That's enough activity to keep it from pausing.
+#
+#  Free: GitHub doesn't charge for jobs in public repositories.
+#
+#  Nothing to set up. It reads the same project address and publishable
+#  key the app itself uses, from js/config.js (both are public by
+#  design; see SETUP.md). Until those are filled in, it does nothing.
+#
+#  To run it by hand: GitHub -> Actions -> "Keep the database awake"
+#  -> Run workflow.
+# =====================================================================
+
+name: Keep the database awake
+
+on:
+  schedule:
+    - cron: '17 14 * * *'   # every day at 14:17 UTC (mid-morning US Eastern)
+  workflow_dispatch:         # adds a "Run workflow" button
+
+permissions:
+  contents: read
+  actions: write             # only so it can keep itself switched on (last step)
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ask the database to say "true"
+        run: |
+          url=$(sed -n "s/^export const SUPABASE_URL = '\([^']*\)'.*/\1/p" js/config.js)
+          key=$(sed -n "s/^export const SUPABASE_PUBLISHABLE_KEY = '\([^']*\)'.*/\1/p" js/config.js)
+          if [ -z "$url" ] || [ -z "$key" ]; then
+            echo "js/config.js isn't filled in yet, so there's no database to keep awake."
+            exit 0
+          fi
+          curl --fail --silent --show-error --max-time 30 --retry 3 \
+            -X POST "$url/rest/v1/rpc/keep_awake" \
+            -H "apikey: $key" -H "Content-Type: application/json" -d '{}'
+          echo
+          echo "The database answered."
+
+      - name: Keep this job switched on
+        # GitHub switches off daily jobs in a repository that hasn't
+        # changed for 60 days. Switching it on again here restarts that
+        # clock. If GitHub ever shows a "workflow disabled" banner
+        # anyway, click "Enable workflow" in the Actions tab.
+        run: gh workflow enable keep-awake.yml
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}

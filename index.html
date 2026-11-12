@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Private records: ask search engines not to list this page -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#a8690f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Pup Health">
+  <title>Sunny & Chomper</title>
+  <!-- Home-screen install: name, icon, colors (see manifest.json) -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#/" class="brand">Sunny <span>&amp;</span> Chomper</a>
+    <span id="mode-badge" class="mode-badge" hidden></span>
+  </header>
+
+  <!-- Every page is drawn inside here by js/app.js -->
+  <main id="app">
+    <p class="loading">Loading…</p>
+  </main>
+
+  <!-- Bottom tabs (hidden until someone is logged in) -->
+  <nav class="tabbar" aria-label="Main">
+    <a href="#/" data-tab="home"><span class="tab-icon" aria-hidden="true">⌂</span>Home</a>
+    <a href="#/health" data-tab="health"><span class="tab-icon" aria-hidden="true">✚</span>Health</a>
+    <a href="#/weight" data-tab="weight"><span class="tab-icon" aria-hidden="true">⚖&#xFE0E;</span>Weight</a>
+    <a href="#/ids" data-tab="ids"><span class="tab-icon" aria-hidden="true">№</span>IDs</a>
+    <a href="#/more" data-tab="more"><span class="tab-icon" aria-hidden="true">☰</span>More</a>
+  </nav>
+
+  <!-- Pop-up panel for forms, and the "are you sure?" box -->
+  <dialog id="sheet" class="sheet"></dialog>
+  <dialog id="confirm" class="confirm"></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

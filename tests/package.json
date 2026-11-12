@@ -1,0 +1,16 @@
+{
+  "name": "pup-health-tests",
+  "private": true,
+  "type": "module",
+  "description": "Check-ups for the database and the app. Not part of the app.",
+  "scripts": {
+    "test": "npm run test:db && npm run test:logic && npm run test:import && npm run test:backup",
+    "test:db": "node database.test.mjs ..",
+    "test:logic": "node logic.test.mjs ..",
+    "test:import": "node import.test.mjs ..",
+    "test:backup": "node backup.test.mjs .."
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.3.7"
+  }
+}
